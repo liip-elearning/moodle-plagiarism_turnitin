@@ -91,8 +91,18 @@ class turnitin_assignment {
         $class->setTitle( $tiititle );
 
         try {
+
+            echo "<script>console.log('assignment pre course creation - Line 95 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
+
+            echo "<script>console.log('class to create - ".$tiititle."')</script>";
+
             $response = $this->api_create_class($turnitincall, $class);
+
+            echo "<script>console.log('response from api create class - ".$tiititle."')</script>";
+
             $newclass = $this->api_get_class($response);
+
+            echo "<script>console.log('assignment post course creation - Line 105 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
 
             $turnitincourse = new stdClass();
             $turnitincourse->courseid = $course->id;

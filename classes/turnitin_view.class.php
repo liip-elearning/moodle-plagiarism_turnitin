@@ -103,14 +103,20 @@ class turnitin_view {
         if ($location == "activity" && $modulename != 'mod_forum') {
             $instructor = new turnitin_user($USER->id, 'Instructor');
 
+            echo "<script>console.log('view pre enrol - Line 106 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
+
             $instructor->join_user_to_class($course->turnitin_cid);
 
             $rubrics = array(get_string('attachrubric', 'plagiarism_turnitin') => $instructor->get_instructor_rubrics());
+
+            echo "<script>console.log('view post enrol - Line 112 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
 
             // Get rubrics that are shared on the account.
             $turnitinclass = new turnitin_class($course->id);
             $turnitinclass->sharedrubrics = array();
             $turnitinclass->read_class_from_tii();
+
+            echo "<script>console.log('view post class read - Line 119 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
 
             // This will ensure all rubric keys are integers.
             $rubricsnew = array(0 => get_string('norubric', 'plagiarism_turnitin'));

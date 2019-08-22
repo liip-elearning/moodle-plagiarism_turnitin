@@ -281,6 +281,8 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
             // Get Course module id and values.
             $cmid = optional_param('update', null, PARAM_INT);
 
+            echo "<script>console.log('lib show form - Line 284 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
+
             // Return no form if the plugin isn't configured.
             if (!$this->is_plugin_configured()) {
                 return;
@@ -605,6 +607,9 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
                 $coursedata->turnitin_cid = $turnitincid;
                 $coursedata = $this->migrate_previous_course($coursedata, $turnitincid);
             } else {
+
+                echo "<script>console.log('lib pre course creation - Line 611 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
+
                 // Otherwise create new course in Turnitin if it doesn't exist.
                 if ($cmid == 0) {
                     $tiicoursedata = $this->create_tii_course($cmid, $add, $coursedata, $workflowcontext);
@@ -612,6 +617,9 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
                     $cm = get_coursemodule_from_id('', $cmid);
                     $tiicoursedata = $this->create_tii_course($cmid, $cm->modname, $coursedata, $workflowcontext);
                 }
+
+                echo "<script>console.log('lib post course creation (".$tiicoursedata->turnitin_cid.") - Line 621 - " . date('d/m/Y H:i:s'). " - " . microtime(true) . "')</script>";
+
                 $coursedata->turnitin_cid = $tiicoursedata->turnitin_cid;
                 $coursedata->turnitin_ctl = $tiicoursedata->turnitin_ctl;
             }
